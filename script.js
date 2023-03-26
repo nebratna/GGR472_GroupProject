@@ -15,11 +15,20 @@ const map = new mapboxgl.Map({
 ADD DATA AS CHOROPLETH MAP ON MAP LOAD
 Use get expression to categorise data based on NDVI values
 --------------------------------------------------------------------*/
+let NDVIgeojson; //new empty variable
+
+fetch('https://raw.githubusercontent.com/nebratna/GGR472_GroupProject/main/Data/NDVI_neighb_TO_2019.geojson') // access GeoJSON via GitHub
+    .then(response => response.json()) // converts the response to JSON format
+    .then(response => {
+        console.log(response); // checking response in console
+        NDVIgeojson = response; //store GeoJSON as a variable using URL from fetch response
+    });
+
 //Add data source and draw initial visiualization of layer
 map.on('load', () => {
     map.addSource('neighbNDVI', {
-        'type': 'geojson',
-        'data': 'https://raw.githubusercontent.com/nebratna/GGR472_GroupProject/main/Data/NDVI_neighb_TO_2019.geojson'
+        type: 'geojson',
+        data: NDVIgeojson
     });
 
     map.addLayer({
