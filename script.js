@@ -17,7 +17,7 @@ Use get expression to categorise data based on NDVI values
 --------------------------------------------------------------------*/
 let ndvigeojson; //new empty variable
 
-fetch('https://raw.githubusercontent.com/nebratna/GGR472_GroupProject/main/Data/NDVI_neighb_TO_2019.geojson') // access GeoJSON via GitHub
+fetch('https://raw.githubusercontent.com/nebratna/GGR472_GroupProject/main/Data/NDVI_neighb_TO_2019_v3.geojson') // access GeoJSON via GitHub
     .then(response => response.json()) // converts the response to JSON format
     .then(response => {
         console.log(response); // checking response in console
@@ -38,7 +38,7 @@ map.on('load', () => {
         'paint': {
             'fill-color': [
                 'step', // STEP expression produces stepped results based on value pairs
-                ['get', 'mean_ndvi_2019_250m'], // 
+                ['get', 'mean_ndvi_'], // 
                 '#a64dff', // Colour assigned to any values < first step
                 0.10, '#ffffcc', // Colours assigned to values >= each step
                 0.24, '#c2e699',
@@ -61,7 +61,7 @@ map.on('load', () => {
         'paint': {
             'fill-color': [
                 'step',
-                ['get', 'mean_ndvi_2019_250m'],
+                ['get', 'mean_ndvi_'],
                 '#a64dff', // Colour assigned to any values < first step
                 0.10, '#ffffcc', // Colours assigned to values >= each step
                 0.24, '#c2e699',
@@ -95,7 +95,7 @@ map.on('mouseleave', 'NDVI', () => {
 map.on('click', 'NDVI', (e) => {
     new mapboxgl.Popup() //Declare new popup object on each click
         .setLngLat(e.lngLat) //Use method to set coordinates of popup based on mouse click location
-        .setHTML("<b>Neighbourhood:</b> " + "<br>" + e.features[0].properties.FIELD_7 + "<br>" + "<b>NDVI:</b> " + e.features[0].properties.mean_ndvi_2019_250m) //Use click event properties to write text for popup
+        .setHTML("<b>Neighbourhood:</b> " + "<br>" + e.features[0].properties.FIELD_7 + "<br>" + "<b>NDVI:</b> " + e.features[0].properties.mean_ndvi_) //Use click event properties to write text for popup
         .addTo(map); //Show  popup on map
 });
 
