@@ -36,7 +36,7 @@
         <button type="button" class="btn btn-outline-secondary" id="returnbutton">Return to full extent</button>
     </div>
 
-    <!-- LEGEND-->
+    <!-- NDVI LEGEND-->
     <div id='legend' class='legend'>
         <h6>NDVI</h6>
         <div><span style='background-color:#ffffcc'></span>0.10 - 0.23</div>
@@ -47,14 +47,49 @@
 
     </div>
 
+    <!-- LST LEGEND-->
+    <div id='LSTlegend' class='LSTlegend'>
+        <h6>LST</h6>
+        <div><span style='background-color:#ffffd4'></span>27.00 - 28.28</div>
+        <div><span style='background-color:#fed98e'></span>28.29 - 29.06</div>
+        <div><span style='background-color:#fe9929'></span>29.07 - 29.81</div>
+        <div><span style='background-color:#d95f0e'></span>29.82 - 30.89</div>
+        <div><span style='background-color:#993404'></span>30.90 - 32.80</div>
+
+    </div>
+
+
+
     <!-- INTERACTIVITY -->
     <!--checkbox-->
     <div class='map-overlay-data'>
         <label>Filter map view</label>
+
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="NDVIcheck">
+            <label class="form-check-label" for="flexCheckDefault">
+                NDVI
+            </label>
+        </div>
+
         <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="legendcheck"> <!--bootstrap checkboxes-->
             <label class="form-check-label" for="flexCheckDefault">
-                Legend
+                NDVI Legend
+            </label>
+        </div>
+
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="LSTcheck">
+            <label class="form-check-label" for="flexCheckDefault">
+                LST
+            </label>
+        </div>
+
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="LSTlegendcheck"> <!--bootstrap checkboxes-->
+            <label class="form-check-label" for="flexCheckDefault">
+                LST Legend
             </label>
         </div>
 
@@ -64,6 +99,7 @@
                 <label>Select neighbourhood</label>
                 <select id="neighbourhood" name="neighbourhood">
                     <option value="" disabled selected>Select neighbourhood</option>
+                    <option value="All">Show all</option>
                     <option value="Agincourt North">Agincourt North</option>
                     <option value="Agincourt South-Malvern West">Agincourt South-Malvern West</option>
                     <option value="Alderwood">Alderwood</option>
