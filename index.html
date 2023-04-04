@@ -20,8 +20,9 @@
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
-    <!-- Turf.js -->
-    <script src='https://unpkg.com/@turf/turf@6/turf.min.js'></script>
+    <!--round slider-->
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
 </head>
 
 <body>
@@ -39,22 +40,24 @@
     <!-- NDVI LEGEND-->
     <div id='legend' class='legend'>
         <h6>NDVI</h6>
-        <div><span style='background-color:#ffffcc'></span>0.10 - 0.23</div>
-        <div><span style='background-color:#c2e699'></span>0.24 - 0.35</div>
-        <div><span style='background-color:#78c679'></span>0.36 - 0.42</div>
+        <div><span style='background-color:#edf8e9'></span>0.10 - 0.23</div>
+        <div><span style='background-color:#bae4b3'></span>0.24 - 0.35</div>
+        <div><span style='background-color:#74c476'></span>0.36 - 0.42</div>
         <div><span style='background-color:#31a354'></span>0.43 - 0.47</div>
-        <div><span style='background-color:#006837'></span>0.48 - 0.54</div>
+        <div><span style='background-color:#006d2c'></span>0.48 - 0.54</div>
 
     </div>
 
     <!-- LST LEGEND-->
     <div id='LSTlegend' class='LSTlegend'>
         <h6>LST</h6>
-        <div><span style='background-color:#ffffd4'></span>27.00 - 28.28</div>
-        <div><span style='background-color:#fed98e'></span>28.29 - 29.06</div>
-        <div><span style='background-color:#fe9929'></span>29.07 - 29.81</div>
-        <div><span style='background-color:#d95f0e'></span>29.82 - 30.89</div>
-        <div><span style='background-color:#993404'></span>30.90 - 32.80</div>
+        <div><span style='background-color:#fee5d9'></span>27.0 - 27.9</div>
+        <!--Had to abandon natural breaks: 27.00 - 28.28-->
+        <div><span style='background-color:#fcbba1'></span>28.0 - 28.9</div><!--28.29 - 29.06-->
+        <div><span style='background-color:#fc9272'></span>29.0 - 29.9</div><!--29.07 - 29.81-->
+        <div><span style='background-color:#fb6a4a'></span>30.0 - 30.9</div><!--29.82 - 30.89-->
+        <div><span style='background-color:#de2d26'></span>31.0 - 31.9</div><!--30.90 - 32.80-->
+        <div><span style='background-color:#a50f15'></span>32.0 - 32.9</div>
 
     </div>
 
@@ -64,6 +67,21 @@
     <!--checkbox-->
     <div class='map-overlay-data'>
         <label>Filter map view</label>
+
+        <!--round slider-->
+        <!-- <div class="map-overlay-top">
+            <div class="map-overlay-inner">
+                <h6>NDVI during the summer of 2019</h6>
+                <label id="NDVIvalue"></label>
+                <input id="slider" type="range" min="0.1" max="0.6" step="0.05" value="0">
+            </div>
+            <div class="map-overlay-inner">
+                <div id="legend_slide" class="legend">
+                    <div class="bar"></div>
+                    <div>NDVI</div>
+                </div>
+            </div>
+        </div> -->
 
         <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="NDVIcheck">
@@ -87,13 +105,13 @@
         </div>
 
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="LSTlegendcheck"> <!--bootstrap checkboxes-->
+            <input class="form-check-input" type="checkbox" value="" id="LSTlegendcheck">
             <label class="form-check-label" for="flexCheckDefault">
                 LST Legend
             </label>
         </div>
 
-        <!--filter-->
+        <!--filter/find a neighbourhood-->
         <form>
             <fieldset id="neighbourhoodfieldset">
                 <label>Select neighbourhood</label>
@@ -225,7 +243,8 @@
                     <option value="South Eglinton-Davisville">South Eglinton-Davisville</option>
                     <option value="South Parkdale">South Parkdale</option>
                     <option value="South Riverdale">South Riverdale</option>
-                    <option value="St Lawrence-East Bayfront-The Islands">St Lawrence-East Bayfront-The Islands</option>
+                    <option value="St Lawrence-East Bayfront-The Islands">St Lawrence-East Bayfront-The Islands
+                    </option>
                     <option value="St.Andrew-Windfields">St.Andrew-Windfields</option>
                     <option value="Steeles">Steeles</option>
                     <option value="Stonegate-Queensway">Stonegate-Queensway</option>
@@ -259,6 +278,39 @@
                     <option value="York University Heights">York University Heights</option>
                     <option value="Yorkdale-Glen Park">Yorkdale-Glen Park</option>
                     <option value="All">Show all</option>
+                </select>
+            </fieldset>
+        </form>
+
+        <!--filter/find neighbourhoods with NDVI range values-->
+        <form>
+            <fieldset id="NDVIfieldset">
+                <label>Select NDVI</label>
+                <select id="NDVIvalueset" name="NDVIvalueset">
+                    <option value="" disabled selected>Select NDVI</option>
+                    <option value="All">Show all</option>
+                    <option value="neighbourhoods1">0.10 - 0.23</option>
+                    <option value="neighbourhoods2">0.24 - 0.35</option>
+                    <option value="neighbourhoods3">0.36 - 0.42</option>
+                    <option value="neighbourhoods4">0.43 - 0.47</option>
+                    <option value="neighbourhoods5">0.48 - 0.54</option>
+                </select>
+            </fieldset>
+        </form>
+
+        <!--filter/find neighbourhoods with LST range values-->
+        <form>
+            <fieldset id="LSTfieldset">
+                <label>Select LST</label>
+                <select id="LSTvalueset" name="LSTvalueset">
+                    <option value="" disabled selected>Select LST</option>
+                    <option value="All">Show all</option>
+                    <option value="LST1">27.0 - 27.9</option>
+                    <option value="LST2">28.0 - 28.9</option>
+                    <option value="LST3">29.0 - 29.9</option>
+                    <option value="LST4">30.0 - 30.9</option>
+                    <option value="LST5">31.0 - 31.9</option>
+                    <option value="LST6">32.0 - 32.9</option>
                 </select>
             </fieldset>
         </form>

@@ -7,7 +7,6 @@ const map = new mapboxgl.Map({
     style: 'mapbox://styles/nebratna/clf2y6xcs002r01o5kcpwugoc',
     center: [-79.408, 43.7056],
     zoom: 10,
-
 });
 
 
@@ -53,42 +52,41 @@ map.on('load', () => {
                 'step', // STEP expression produces stepped results based on value pairs
                 ['get', 'mean_ndvi_'], // 
                 '#a64dff', // Colour assigned to any values < first step
-                0.10, '#ffffcc', // Colours assigned to values >= each step
-                0.24, '#c2e699',
-                0.36, '#78c679',
+                0.10, '#eff3ff', // Colours assigned to values >= each step
+                0.24, '#bae4b3',
+                0.36, '#74c476',
                 0.43, '#31a354', //0.43 to 0.48
-                0.48, '#006837', //0.48 and higher
-
+                0.48, '#006d2c', //0.48 and higher
             ],
-            'fill-opacity': 0.5,
+            'fill-opacity': 1.0,
             'fill-outline-color': 'black'
         },
 
     });
 
     //Add another visualization of the neighbrouhood polygons when the mouse is hovering over it
-    map.addLayer({
-        'id': 'NDVI-hl', //Update id to represent highlighted layer
-        'type': 'fill',
-        'source': 'neighbNDVI',
-        'paint': {
-            'fill-color': [
-                'step',
-                ['get', 'mean_ndvi_'],
-                '#a64dff', // Colour assigned to any values < first step
-                0.10, '#ffffcc', // Colours assigned to values >= each step
-                0.24, '#c2e699',
-                0.36, '#78c679',
-                0.43, '#31a354', //0.43 to 0.48
-                0.48, '#006837', //0.48 and higher
+    // map.addLayer({
+    //     'id': 'NDVI-hl', //Update id to represent highlighted layer
+    //     'type': 'fill',
+    //     'source': 'neighbNDVI',
+    //     'paint': {
+    //         'fill-color': [
+    //             'step',
+    //             ['get', 'mean_ndvi_'],
+    //             '#a64dff', // Colour assigned to any values < first step
+    //             0.10, '#ffffcc', // Colours assigned to values >= each step
+    //             0.24, '#c2e699',
+    //             0.36, '#78c679',
+    //             0.43, '#31a354', //0.43 to 0.48
+    //             0.48, '#006837', //0.48 and higher
 
-            ],
-            'fill-opacity': 0.8,
-            'fill-outline-color': 'black'
-        },
+    //         ],
+    //         'fill-opacity': 0.8,
+    //         'fill-outline-color': 'black'
+    //     },
 
-        'filter': ['==', ['get', 'FIELD_1'], ''] //Set an initial filter to return nothing
-    });
+    //     'filter': ['==', ['get', 'FIELD_1'], ''] //Set an initial filter to return nothing
+    // });
 
     /*------------------------------------
     LST layer
@@ -108,40 +106,41 @@ map.on('load', () => {
                 'step', // STEP expression produces stepped results based on value pairs
                 ['get', 'mean_lst_3'], // 
                 '#a64dff', // Colour assigned to any values < first step
-                27.00, '#ffffd4', // Colours assigned to values >= each step
-                28.29, '#fed98e',
-                29.07, '#fe9929',
-                29.82, '#d95f0e',
-                30.90, '#993404', //30.90 and higher
+                27.0, '#fee5d9',// Colours assigned to values >= each step
+                28.0, '#fcbba1',
+                29.0, '#fc9272',
+                30.0, '#fb6a4a',
+                31.0, '#de2d26', //30.90 and higher
+                32.0, '#a50f15',
             ],
-            'fill-opacity': 0.5,
+            'fill-opacity': 1.0,
             'fill-outline-color': 'black'
         },
 
     });
 
     //Add another visualization of the neighbrouhood polygons when the mouse is hovering over it
-    map.addLayer({
-        'id': 'LST-hl', //Update id to represent highlighted layer
-        'type': 'fill',
-        'source': 'neighbLST',
-        'paint': {
-            'fill-color': [
-                'step',
-                ['get', 'mean_ndvi_'],
-                '#a64dff', // Colour assigned to any values < first step
-                27.00, '#ffffd4', // Colours assigned to values >= each step
-                28.29, '#fed98e',
-                29.07, '#fe9929',
-                29.82, '#d95f0e',
-                30.90, '#993404', //30.90 and higher
+    // map.addLayer({
+    //     'id': 'LST-hl', //Update id to represent highlighted layer
+    //     'type': 'fill',
+    //     'source': 'neighbLST',
+    //     'paint': {
+    //         'fill-color': [
+    //             'step',
+    //             ['get', 'mean_ndvi_'],
+    //             '#a64dff', // Colour assigned to any values < first step
+    //             27.00, '#ffffd4', // Colours assigned to values >= each step
+    //             28.29, '#fed98e',
+    //             29.07, '#fe9929',
+    //             29.82, '#d95f0e',
+    //             30.90, '#993404', //30.90 and higher
 
-            ],
-            'fill-opacity': 0.6,
-            'fill-outline-color': 'black'
-        },
-        'filter': ['==', ['get', 'mean_ndvi_'], ''] //Set an initial filter to return nothing
-    });
+    //         ],
+    //         'fill-opacity': 0.6,
+    //         'fill-outline-color': 'black'
+    //     },
+    //     'filter': ['==', ['get', 'mean_ndvi_'], ''] //Set an initial filter to return nothing
+    // });
 
 
 
@@ -164,9 +163,11 @@ map.on('load', () => {
     });
 
     map.on('click', 'NDVI', (e) => {
+        let NDVI = e.features[0].properties.mean_ndvi_ // NDVI variable that needs to be rounded 
+        let roundedNDVI = NDVI.toFixed(2); // rounding NDVI variable to 2 decimal places
         new mapboxgl.Popup() //Declare new popup object on each click
             .setLngLat(e.lngLat) //Use method to set coordinates of popup based on mouse click location
-            .setHTML("<b>Neighbourhood:</b> " + "<br>" + e.features[0].properties.FIELD_7 + "<br>" + "<b>NDVI:</b> " + e.features[0].properties.mean_ndvi_) //Use click event properties to write text for popup
+            .setHTML("<b>Neighbourhood:</b> " + "<br>" + e.features[0].properties.FIELD_7 + "<br>" + "<b>NDVI:</b> " + roundedNDVI) //Use click event properties to write text for popup
             .addTo(map); //Show  popup on map
     });
 
@@ -185,26 +186,28 @@ map.on('load', () => {
     });
 
     map.on('click', 'LST', (e) => {
+        let LST = e.features[0].properties.mean_lst_3 // LST variable that needs to be rounded 
+        let roundedLST = LST.toFixed(1); // rounding LST variable to 1 decimal places
         new mapboxgl.Popup() //Declare new popup object on each click
             .setLngLat(e.lngLat) //Use method to set coordinates of popup based on mouse click location
-            .setHTML("<b>Neighbourhood:</b> " + "<br>" + e.features[0].properties.FIELD_7 + "<br>" + "<b>LST:</b> " + e.features[0].properties.mean_lst_3) //Use click event properties to write text for popup
+            .setHTML("<b>Neighbourhood:</b> " + "<br>" + e.features[0].properties.FIELD_7 + "<br>" + "<b>LST:</b> " + roundedLST) //Use click event properties to write text for popup
             .addTo(map); //Show  popup on map
     });
 
     /*---------------------------------------------------------------------
     SIMPLE HOVER EVENTs for NDVI and LST //need to fix reset!!!!
     ----------------------------------------------------------------------*/
-    map.on('mousemove', 'NDVI', (e) => {
-        if (e.features.length > 0) {
-            map.setFilter('NDVI-hl', ['==', ['get', 'FIELD_1'], e.features[0].properties.FIELD_1]);
-        }
-    })
+    // map.on('mousemove', 'NDVI', (e) => {
+    //     if (e.features.length > 0) {
+    //         map.setFilter('NDVI-hl', ['==', ['get', 'FIELD_1'], e.features[0].properties.FIELD_1]);
+    //     }
+    // })
 
-    map.on('mousemove', 'LST', (e) => {
-        if (e.features.length > 0) {
-            map.setFilter('LST-hl', ['==', ['get', 'FIELD_1'], e.features[0].properties.FIELD_1]);
-        }
-    })
+    // map.on('mousemove', 'LST', (e) => {
+    //     if (e.features.length > 0) {
+    //         map.setFilter('LST-hl', ['==', ['get', 'FIELD_1'], e.features[0].properties.FIELD_1]);
+    //     }
+    // })
 
     /*--------------------------------------------------------------------
     ADDING MAPBOX CONTROLS AS ELEMENTS ON MAP
@@ -286,6 +289,7 @@ map.on('load', () => {
         );
     });
 
+    
     /*-----------------------------------------------------------------------------------
     Filter NDVI or LST data layer to show selected Neighbrourhood from dropdown selection
     -------------------------------------------------------------------------------------*/
@@ -297,7 +301,7 @@ map.on('load', () => {
 
         if (neighbourhoodvalue == 'All') {
             map.setFilter(
-                'NDVI', /*same as layer name on line 26*/
+                'NDVI',
                 ['has', 'FIELD_7'] //returns all polygons from layer that have a value in FIELD_7);
             );
         } else {
@@ -306,10 +310,10 @@ map.on('load', () => {
                 ['==', ['get', 'FIELD_7'], neighbourhoodvalue] //returns polygon with FIELD_7 value that matches dropdown selection);
             );
         };
-        
+
         if (neighbourhoodvalue == 'All') {
             map.setFilter(
-                'LST', /*same as layer name on line 26*/
+                'LST',
                 ['has', 'FIELD_7'] //returns all polygons from layer that have a value in FIELD_7);
             );
         } else {
@@ -320,5 +324,120 @@ map.on('load', () => {
         };
 
     });
+
+});
+
+/*-----------------------------------------------------------------------------------
+Filter neighbourhoods to show selected NDVI ranges from dropdown selection
+-------------------------------------------------------------------------------------*/
+
+let NDVIvalueselection;
+
+document.getElementById("NDVIfieldset").addEventListener('change', (e) => {
+    NDVIvalueselection = document.getElementById('NDVIvalueset').value;
+
+    if (NDVIvalueselection == 'All') {
+        map.setFilter(
+            'NDVI',
+            ['has', 'FIELD_7'] //returns all polygons from layer that have a value in FIELD_7;
+        );
+    } else {
+        if (NDVIvalueselection == 'neighbourhoods1') {
+            map.setFilter(
+                'NDVI',
+                ['all',
+                    ['>=', ['get', 'mean_ndvi_'], 0.1],
+                    ['<', ['get', 'mean_ndvi_'], 0.23]])
+        };
+
+        if (NDVIvalueselection == 'neighbourhoods2') {
+            map.setFilter(
+                'NDVI',
+                ['all',
+                    ['>=', ['get', 'mean_ndvi_'], 0.24],
+                    ['<', ['get', 'mean_ndvi_'], 0.35]])
+        };
+        if (NDVIvalueselection == 'neighbourhoods3') {
+            map.setFilter(
+                'NDVI',
+                ['all',
+                    ['>=', ['get', 'mean_ndvi_'], 0.36],
+                    ['<', ['get', 'mean_ndvi_'], 0.42]])
+        };
+        if (NDVIvalueselection == 'neighbourhoods4') {
+            map.setFilter(
+                'NDVI', ['all',
+                ['>=', ['get', 'mean_ndvi_'], 0.43],
+                ['<', ['get', 'mean_ndvi_'], 0.47]])
+        };
+        if (NDVIvalueselection == 'neighbourhoods5') {
+            map.setFilter(
+                'NDVI',
+                ['all',
+                    ['>=', ['get', 'mean_ndvi_'], 0.48],
+                    ['<', ['get', 'mean_ndvi_'], 0.54]])
+        };
+    };
+
+});
+
+/*-----------------------------------------------------------------------------------
+Filter LST to show selected LST ranges from dropdown selection
+-------------------------------------------------------------------------------------*/
+
+let LSTvalueselection;
+
+document.getElementById("LSTfieldset").addEventListener('change', (e) => {
+    LSTvalueselection = document.getElementById('LSTvalueset').value;
+
+    if (LSTvalueselection == 'All') {
+        map.setFilter(
+            'LST',
+            ['has', 'FIELD_7'] //returns all polygons from layer that have a value in FIELD_7;
+        );
+    } else {
+        if (LSTvalueselection == 'LST1') {
+            map.setFilter(
+                'LST',
+                ['all',
+                    ['>=', ['get', 'mean_lst_3'], 27.0],
+                    ['<', ['get', 'mean_lst_3'], 27.9]])
+        };
+
+        if (LSTvalueselection == 'LST2') {
+            map.setFilter(
+                'LST',
+                ['all',
+                    ['>=', ['get', 'mean_lst_3'], 28.0],
+                    ['<', ['get', 'mean_lst_3'], 28.9]])
+        };
+        if (LSTvalueselection == 'LST3') {
+            map.setFilter(
+                'LST',
+                ['all',
+                    ['>=', ['get', 'mean_lst_3'], 29.0],
+                    ['<', ['get', 'mean_lst_3'], 29.9]])
+        };
+        if (LSTvalueselection == 'LST4') {
+            map.setFilter(
+                'LST',
+                ['all',
+                    ['>=', ['get', 'mean_lst_3'], 30.0],
+                    ['<', ['get', 'mean_lst_3'], 30.9]])
+        };
+        if (LSTvalueselection == 'LST5') {
+            map.setFilter(
+                'LST', ['all',
+                ['>=', ['get', 'mean_lst_3'], 31.0],
+                    ['<', ['get', 'mean_lst_3'], 31.9]])
+        };
+        if (LSTvalueselection == 'LST6') {
+            map.setFilter(
+                'LST',
+                ['all',
+                    ['>=', ['get', 'mean_lst_3'], 32.0],
+                    ['<', ['get', 'mean_lst_3'], 32.9]])
+        };
+    };
 
 });
