@@ -58,7 +58,7 @@ map.on('load', () => {
                 0.43, '#31a354', //0.43 to 0.48
                 0.48, '#006d2c', //0.48 and higher
             ],
-            'fill-opacity': 1.0,
+            'fill-opacity': 0.7,
             'fill-outline-color': 'black'
         },
 
@@ -113,7 +113,7 @@ map.on('load', () => {
                 31.0, '#de2d26', //30.90 and higher
                 32.0, '#a50f15',
             ],
-            'fill-opacity': 1.0,
+            'fill-opacity': 0.7,
             'fill-outline-color': 'black'
         },
 
