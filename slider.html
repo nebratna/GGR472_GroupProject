@@ -1,22 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NDVI and LST Slider</title>
-
+    <!-- mapbox API -->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css' rel='stylesheet' />
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
     <!--compare-->
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.4.0/mapbox-gl-compare.js"></script>
-    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.4.0/mapbox-gl-compare.css"
+    <link rel="stylesheet"
+        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.4.0/mapbox-gl-compare.css"
         type="text/css">
 </head>
-<body>
-        <!--COMPARE CONTAINER FOR SLIDER-->
-        <div id="comparison-container">
-            <div id="before" class="map2"></div>
-            <div id="after" class="map2"></div>
 
-            <script src="slider.js"></script>
+<body>
+    <!-- MAP CONTAINER -->
+    <div id='map' class='map'></div>
+    
+    <!--COMPARE CONTAINER FOR SLIDER-->
+    <div id="comparison-container">
+        <div id="before" class="map2"></div>
+        <div id="after" class="map2"></div>
+
+        <script src="slider.js"></script>
 </body>
+
 </html>

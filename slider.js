@@ -1,4 +1,36 @@
+//Define access token
+mapboxgl.accessToken = 'pk.eyJ1IjoibmVicmF0bmEiLCJhIjoiY2xjdmZ6Z3I0MDdoODNycWtvNDVuYjJydCJ9.MU8-uPe3u6ya0aTiMr079g'; //default public map token from my Mapbox account
 
+//Initialize map
+const map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/nebratna/clf2y6xcs002r01o5kcpwugoc',
+    center: [-79.408, 43.7056],
+    zoom: 10,
+});
+
+
+/*--------------------------------------------------------------------
+ADD NDVI and LST DATA AS CHOROPLETH MAP ON MAP LOAD
+Use get expression to categorise data based on NDVI values
+--------------------------------------------------------------------*/
+let ndvigeojson; //new empty NDVI variable
+let lstgeojson; //new empty LST variable
+
+fetch('https://raw.githubusercontent.com/nebratna/GGR472_GroupProject/main/Data/NDVI_neighb_TO_2019_v3.geojson') // access NDVI GeoJSON via GitHub
+    .then(response => response.json()) // converts the response to JSON format
+    .then(response => {
+        console.log(response); // checking response in console
+        ndvigeojson = response; //store GeoJSON as a variable using URL from fetch response
+    });
+
+fetch('https://raw.githubusercontent.com/nebratna/GGR472_GroupProject/main/Data/LST_neighb_TO_3Y_2019_v3.geojson') // access LST GeoJSON via GitHub
+    .then(response => response.json()) // converts the response to JSON format
+    .then(response => {
+        console.log(response); // checking response in console
+        lstgeojson = response; //store GeoJSON as a variable using URL from fetch response
+    });
+    
 /*----------------------------------------------------------------
 CREATING THE TWO MAPS FOR COMPARISON------------------------------
 -----------------------------------------------------------------*/
