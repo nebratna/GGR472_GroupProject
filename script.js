@@ -97,58 +97,30 @@ map.on('load', () => {
         data: lstgeojson
     });
 
-   
-    map.loadImage('https://raw.githubusercontent.com/subtlepatterns/SubtlePatterns/gh-pages/worn_dots.png',
-        (err, image) => {
-            if (err) throw err;
-            map.addImage('pattern', image);
-            map.addLayer({
-                'id': 'LST',
-                'type': 'fill',
-                'source': 'neighbLST',
-                'paint': {
-                    'fill-color': [
-                        'step', // STEP expression produces stepped results based on value pairs
-                        ['get', 'mean_lst_3'], // 
-                        '#a64dff', // Colour assigned to any values < first step
-                        27.0, '#fee5d9',// Colours assigned to values >= each step
-                        28.0, '#fcbba1',
-                        29.0, '#fc9272',
-                        30.0, '#fb6a4a',
-                        31.0, '#de2d26', //30.90 and higher
-                        32.0, '#a50f15',
-                    ],
-                    'fill-pattern': 'pattern',
-                    'fill-opacity': 0.7,
-                    'fill-outline-color': 'black'
-                },
 
-            });
-        });
-   
 
-    // map.addLayer({
-    //     'id': 'LST',
-    //     'type': 'fill',
-    //     'source': 'neighbLST',
-    //     'paint': {
-    //         'fill-color': [
-    //             'step', // STEP expression produces stepped results based on value pairs
-    //             ['get', 'mean_lst_3'], // 
-    //             '#a64dff', // Colour assigned to any values < first step
-    //             27.0, '#fee5d9',// Colours assigned to values >= each step
-    //             28.0, '#fcbba1',
-    //             29.0, '#fc9272',
-    //             30.0, '#fb6a4a',
-    //             31.0, '#de2d26', //30.90 and higher
-    //             32.0, '#a50f15',
-    //         ],
-    //         // 'fill-pattern': 'img',
-    //         'fill-opacity': 0.7,
-    //         'fill-outline-color': 'black'
-    //     },
 
-    // });
+    map.addLayer({
+        'id': 'LST',
+        'type': 'fill',
+        'source': 'neighbLST',
+        'paint': {
+            'fill-color': [
+                'step', // STEP expression produces stepped results based on value pairs
+                ['get', 'mean_lst_3'], // 
+                '#a64dff', // Colour assigned to any values < first step
+                27.0, '#fee5d9',// Colours assigned to values >= each step
+                28.0, '#fcbba1',
+                29.0, '#fc9272',
+                30.0, '#fb6a4a',
+                31.0, '#de2d26', //30.90 and higher
+                32.0, '#a50f15',
+            ],
+            'fill-opacity': 0.7,
+            'fill-outline-color': 'black'
+        },
+
+    });
 
     //Add another visualization of the neighbrouhood polygons when the mouse is hovering over it
     // map.addLayer({
@@ -156,27 +128,27 @@ map.on('load', () => {
     //     'type': 'fill',
     //     'source': 'neighbLST',
     //     'paint': {
-//     'fill-color': [
-//         'step', // STEP expression produces stepped results based on value pairs
-//         ['get', 'mean_lst_3'], // 
-//         '#a64dff', // Colour assigned to any values < first step
-//         27.0, '#fee5d9',// Colours assigned to values >= each step
-//         28.0, '#fcbba1',
-//         29.0, '#fc9272',
-//         30.0, '#fb6a4a',
-//         31.0, '#de2d26', //30.90 and higher
-//         32.0, '#a50f15',
-//     ],
-//         'fill-opacity': 0.7,
-//             'fill-outline-color': 'black'
-// },
+    //     'fill-color': [
+    //         'step', // STEP expression produces stepped results based on value pairs
+    //         ['get', 'mean_lst_3'], // 
+    //         '#a64dff', // Colour assigned to any values < first step
+    //         27.0, '#fee5d9',// Colours assigned to values >= each step
+    //         28.0, '#fcbba1',
+    //         29.0, '#fc9272',
+    //         30.0, '#fb6a4a',
+    //         31.0, '#de2d26', //30.90 and higher
+    //         32.0, '#a50f15',
+    //     ],
+    //         'fill-opacity': 0.7,
+    //             'fill-outline-color': 'black'
+    // },
     //     'filter': ['==', ['get', 'mean_ndvi_'], ''] //Set an initial filter to return nothing
     // });
 
     /*------------------------------------
     Outline layer 
     --------------------------------------*/
-        
+
     // map.addLayer({
     //     'id': 'outline',
     //     'type': 'fill',
@@ -337,40 +309,40 @@ map.on('load', () => {
     });
 
 
-/*-----------------------------------------------------------------------------------
-Filter NDVI or LST data layer to show selected Neighbrourhood from dropdown selection
--------------------------------------------------------------------------------------*/
-let neighbourhoodvalue;
+    /*-----------------------------------------------------------------------------------
+    Filter NDVI or LST data layer to show selected Neighbrourhood from dropdown selection
+    -------------------------------------------------------------------------------------*/
+    let neighbourhoodvalue;
 
-document.getElementById("neighbourhoodfieldset").addEventListener('change', (e) => {
-    neighbourhoodvalue = document.getElementById('neighbourhood').value;
-    console.log(neighbourhoodvalue);
+    document.getElementById("neighbourhoodfieldset").addEventListener('change', (e) => {
+        neighbourhoodvalue = document.getElementById('neighbourhood').value;
+        console.log(neighbourhoodvalue);
 
-    if (neighbourhoodvalue == 'All') {
-        map.setFilter(
-            'NDVI',
-            ['has', 'FIELD_7'] //returns all polygons from layer that have a value in FIELD_7);
-        );
-    } else {
-        map.setFilter(
-            'NDVI',
-            ['==', ['get', 'FIELD_7'], neighbourhoodvalue] //returns polygon with FIELD_7 value that matches dropdown selection);
-        );
-    };
+        if (neighbourhoodvalue == 'All') {
+            map.setFilter(
+                'NDVI',
+                ['has', 'FIELD_7'] //returns all polygons from layer that have a value in FIELD_7);
+            );
+        } else {
+            map.setFilter(
+                'NDVI',
+                ['==', ['get', 'FIELD_7'], neighbourhoodvalue] //returns polygon with FIELD_7 value that matches dropdown selection);
+            );
+        };
 
-    if (neighbourhoodvalue == 'All') {
-        map.setFilter(
-            'LST',
-            ['has', 'FIELD_7'] //returns all polygons from layer that have a value in FIELD_7);
-        );
-    } else {
-        map.setFilter(
-            'LST',
-            ['==', ['get', 'FIELD_7'], neighbourhoodvalue] //returns polygon with FIELD_7 value that matches dropdown selection);
-        );
-    };
+        if (neighbourhoodvalue == 'All') {
+            map.setFilter(
+                'LST',
+                ['has', 'FIELD_7'] //returns all polygons from layer that have a value in FIELD_7);
+            );
+        } else {
+            map.setFilter(
+                'LST',
+                ['==', ['get', 'FIELD_7'], neighbourhoodvalue] //returns polygon with FIELD_7 value that matches dropdown selection);
+            );
+        };
 
-});
+    });
 
 });
 
@@ -509,27 +481,27 @@ document.getElementById("LSTfieldset").addEventListener('change', (e) => {
     };
 
 });
-    //CODE FOR THE OUTLINE TO WORK:
+//CODE FOR THE OUTLINE TO WORK:
 
-    //get values from current layers shown in map and store as object
-    // let visiblepolys = map.queryRenderedFeatures(
-    //     { layers: ['NDVI', 'LST'] }
-    // );
+//get values from current layers shown in map and store as object
+// let visiblepolys = map.queryRenderedFeatures(
+//     { layers: ['NDVI', 'LST'] }
+// );
 
-    // //check for duplicates in visiblepolys by first getting neighbourhood names
-    // let nbrhds = []
-    // visiblepolys.forEach(e => {
-    //     nbrhds.push(e.properties.FIELD_7)
-    // });
+// //check for duplicates in visiblepolys by first getting neighbourhood names
+// let nbrhds = []
+// visiblepolys.forEach(e => {
+//     nbrhds.push(e.properties.FIELD_7)
+// });
 
-    // //then store duplicate neighbourhood names using js filter method (e.g., where neighbourhood appears in both NDVI and LST layers)
-    // const overlapnbrhds = nbrhds.filter((item, index) => index !== nbrhds.indexOf(item));
-    // console.log(overlapnbrhds);
+// //then store duplicate neighbourhood names using js filter method (e.g., where neighbourhood appears in both NDVI and LST layers)
+// const overlapnbrhds = nbrhds.filter((item, index) => index !== nbrhds.indexOf(item));
+// console.log(overlapnbrhds);
 
-    // //next update add layer to filter for polygons w/ overlapping neighbourhoods
-    // let filter = ['match', ['get', 'FIELD_7'], overlapnbrhds, true, false]
-    // console.log(filter)
-    // map.setFilter('outline', filter)
+// //next update add layer to filter for polygons w/ overlapping neighbourhoods
+// let filter = ['match', ['get', 'FIELD_7'], overlapnbrhds, true, false]
+// console.log(filter)
+// map.setFilter('outline', filter)
 
 
 //CODE FOR THE OUTLINE attempt #2:
