@@ -18,10 +18,18 @@
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"
+        integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"
+        integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ"
+        crossorigin="anonymous"></script>
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
     <!--round slider-->
     <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+
 
 </head>
 
@@ -68,37 +76,22 @@
     <div class='map-overlay-data'>
         <label>Filter map view</label>
 
-        <!--round slider-->
-        <!-- <div class="map-overlay-top">
-            <div class="map-overlay-inner">
-                <h6>NDVI during the summer of 2019</h6>
-                <label id="NDVIvalue"></label>
-                <input id="slider" type="range" min="0.1" max="0.6" step="0.05" value="0">
-            </div>
-            <div class="map-overlay-inner">
-                <div id="legend_slide" class="legend">
-                    <div class="bar"></div>
-                    <div>NDVI</div>
-                </div>
-            </div>
-        </div> -->
-
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="NDVIcheck">
+            <input class="form-check-input" type="checkbox" value="" id="NDVIcheck" checked>
             <label class="form-check-label" for="flexCheckDefault">
                 NDVI
             </label>
         </div>
 
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="legendcheck"> <!--bootstrap checkboxes-->
+            <input class="form-check-input" type="checkbox" value="" id="legendcheck">
             <label class="form-check-label" for="flexCheckDefault">
                 NDVI Legend
             </label>
         </div>
 
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="LSTcheck">
+            <input class="form-check-input" type="checkbox" value="" id="LSTcheck" checked>
             <label class="form-check-label" for="flexCheckDefault">
                 LST
             </label>
@@ -114,9 +107,9 @@
         <!--filter/find a neighbourhood-->
         <form>
             <fieldset id="neighbourhoodfieldset">
-                <label>Select neighbourhood</label>
+                <label>Select a neighbourhood</label>
                 <select id="neighbourhood" name="neighbourhood">
-                    <option value="" disabled selected>Select neighbourhood</option>
+                    <!-- <option value="" disabled selected>Select neighbourhood</option> -->
                     <option value="All">Show all</option>
                     <option value="Agincourt North">Agincourt North</option>
                     <option value="Agincourt South-Malvern West">Agincourt South-Malvern West</option>
@@ -280,40 +273,43 @@
                     <option value="All">Show all</option>
                 </select>
             </fieldset>
-        </form>
 
-        <!--filter/find neighbourhoods with NDVI range values-->
-        <form>
-            <fieldset id="NDVIfieldset">
-                <label>Select NDVI</label>
-                <select id="NDVIvalueset" name="NDVIvalueset">
-                    <option value="" disabled selected>Select NDVI</option>
-                    <option value="All">Show all</option>
-                    <option value="neighbourhoods1">0.10 - 0.23</option>
-                    <option value="neighbourhoods2">0.24 - 0.35</option>
-                    <option value="neighbourhoods3">0.36 - 0.42</option>
-                    <option value="neighbourhoods4">0.43 - 0.47</option>
-                    <option value="neighbourhoods5">0.48 - 0.54</option>
-                </select>
-            </fieldset>
-        </form>
+            <!--filter/find neighbourhoods with NDVI range values-->
+            <form>
+                <fieldset id="NDVIfieldset">
+                    <label><br> Select the level of greenness (NDVI)</label>
+                    <div>
+                        <select id="NDVIvalueset" class="select" size="5" multiple> <!--multiple option allow to select multiple items at the same time, but it doesn't seem to work with my js code-->
+                            <!-- <option value="" disabled selected>Select NDVI</option> -->
+                            <option value="All">Show all</option>
+                            <option value="neighbourhoods1">Least green: 0.10 - 0.23</option>
+                            <option value="neighbourhoods2">0.24 - 0.35</option>
+                            <option value="neighbourhoods3">0.36 - 0.42</option>
+                            <option value="neighbourhoods4">0.43 - 0.47</option>
+                            <option value="neighbourhoods5">Most green: 0.48 - 0.54</option>
+                        </select>
+                    </div>
+                </fieldset>
+            </form>
 
-        <!--filter/find neighbourhoods with LST range values-->
-        <form>
-            <fieldset id="LSTfieldset">
-                <label>Select LST</label>
-                <select id="LSTvalueset" name="LSTvalueset">
-                    <option value="" disabled selected>Select LST</option>
-                    <option value="All">Show all</option>
-                    <option value="LST1">27.0 - 27.9</option>
-                    <option value="LST2">28.0 - 28.9</option>
-                    <option value="LST3">29.0 - 29.9</option>
-                    <option value="LST4">30.0 - 30.9</option>
-                    <option value="LST5">31.0 - 31.9</option>
-                    <option value="LST6">32.0 - 32.9</option>
-                </select>
-            </fieldset>
-        </form>
+            <!--filter/find neighbourhoods with LST range values-->
+            <form>
+                <fieldset id="LSTfieldset">
+                    <label><br>Select LST (°C)</label>
+                    <div>
+                        <select id="LSTvalueset" name="LSTvalueset" class="select" size="6" multiple>
+                            <!-- <option value="" disabled selected>Select LST</option> -->
+                            <option value="All">Show all</option>
+                            <option value="LST1">Lowest: 27.0 - 27.9</option>
+                            <option value="LST2">28.0 - 28.9</option>
+                            <option value="LST3">29.0 - 29.9</option>
+                            <option value="LST4">30.0 - 30.9</option>
+                            <option value="LST5">31.0 - 31.9</option>
+                            <option value="LST6">Highest: 32.0 - 32.9</option>
+                        </select>
+                    </div>
+                </fieldset>
+            </form>
     </div>
 
 
