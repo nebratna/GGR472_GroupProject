@@ -98,8 +98,6 @@ map.on('load', () => {
     });
 
 
-
-
     map.addLayer({
         'id': 'LST',
         'type': 'fill',
@@ -149,19 +147,16 @@ map.on('load', () => {
     Outline layer 
     --------------------------------------*/
 
-    // map.addLayer({
-    //     'id': 'outline',
-    //     'type': 'fill',
-    //     'source': 'neighbNDVI',
-    //     'paint': {
-    //         'fill-color': 'black',
-    //         'fill-opacity': 0.2,
-    //         'fill-outline-color': 'red'
+    map.addLayer({
+        'id': 'outline',
+        'type': 'line',
+        'source': 'neighbNDVI',
+        'paint': {
+            'line-color': 'red',
+        },
+        'filter': ['==', ['get', 'FIELD_7'], ''] //Set an initial filter to return nothing 
 
-    //     },
-    //     'filter': ['==', ['get', 'FIELD_7'], ''] //Set an initial filter to return nothing 
-
-    // });
+    });
 
     /*-----------------------------------------------------------------
     ADDING MOUSE CLICK EVENT FOR LAYER
@@ -352,6 +347,7 @@ Filter neighbourhoods to show selected NDVI ranges from dropdown selection
 
 let NDVIvalueselection;
 
+
 document.getElementById("NDVIfieldset").addEventListener('change', (e) => {
     NDVIvalueselection = document.getElementById('NDVIvalueset').value;
 
@@ -366,7 +362,8 @@ document.getElementById("NDVIfieldset").addEventListener('change', (e) => {
                 'NDVI',
                 ['all',
                     ['>=', ['get', 'mean_ndvi_'], 0.1],
-                    ['<', ['get', 'mean_ndvi_'], 0.23]])
+                    ['<', ['get', 'mean_ndvi_'], 0.23]]);
+
         };
 
         if (NDVIvalueselection == 'neighbourhoods2') {
@@ -396,36 +393,69 @@ document.getElementById("NDVIfieldset").addEventListener('change', (e) => {
                     ['>=', ['get', 'mean_ndvi_'], 0.48],
                     ['<', ['get', 'mean_ndvi_'], 0.54]])
         };
-    };
 
-    //CODE FOR THE OUTLINE TO WORK attempt #1:
+        let visiblepolysNDVI = map.queryRenderedFeatures({ layers: ['NDVI'] }); // gather all polygons that were generated for NDVI selection
+        let visiblepolysLST = map.queryRenderedFeatures({ layers: ['LST'] }); // gather all polygons that were generated for LST selection
 
-    //get values from current layers shown in map and store as object
-    // let visiblepolys = map.queryRenderedFeatures({ layers: ['NDVI', 'LST'] });
-    // console.log(visiblepolys)
+        let nbrhdsNDVI = []  // this will have a list of all neighbrourhoods with selected NDVI, but it has duplicates somehow
+        visiblepolysNDVI.forEach(e => {
+            nbrhdsNDVI.push(e.properties.FIELD_7)
+        });
 
-    // //check for duplicates in visiblepolys by first getting neighbourhood names
-    // let nbrhds = []
-    // visiblepolys.forEach(e => {
-    //     nbrhds.push(e.properties.FIELD_7)
-    // });
+        let nbrhdsLST = [] // this will have a list of all neighbrourhoods with selected LST, but it has duplicates somehow
+        visiblepolysLST.forEach(e => {
+            nbrhdsLST.push(e.properties.FIELD_7)
+        });
 
-    // //then store duplicate neighbourhood names using js filter method (e.g., where neighbourhood appears in both NDVI and LST layers)
-    // const overlapnbrhds = nbrhds.filter((item, index) => index !== nbrhds.indexOf(item));
-    // console.log(overlapnbrhds);
+        const withoutduplicatesNDVI = nbrhdsNDVI.filter((item, index) => index == nbrhdsNDVI.indexOf(item)); //removes dulplicates
+        console.log(withoutduplicatesNDVI);
+        
+        const withoutduplicatesLST = nbrhdsLST.filter((item, index) => index == nbrhdsLST.indexOf(item));
+        console.log(withoutduplicatesLST);
+        
+        let filter = withoutduplicatesNDVI.filter(element => withoutduplicatesLST.includes(element)); // this creates an array with polygon names that should be outlined
+        console.log(filter)
+        
+        map.setFilter('outline', ['==', ['get', 'FIELD_7'], filter]) // this is suppoesed to outline the polygons with names in 'filter'
 
-    // //next update add layer to filter for polygons w/ overlapping neighbourhoods
-    // let filter = ['match', ['get', 'FIELD_7'], overlapnbrhds, true, false]
+        
 
-    // map.setFilter('outline', filter)
-
+    }
 });
+
+        //CODE FOR THE OUTLINE TO WORK attempt #1:
+
+        //get values from current layers shown in map and store as object
+
+
+
+
+        // let visiblepolys = map.queryRenderedFeatures({ layers: ['NDVI', 'LST']});
+        // console.log(visiblepolys)
+
+        // //check for duplicates in visiblepolys by first getting neighbourhood names
+        // let nbrhds = []
+        // visiblepolys.forEach(e => {
+        //     nbrhds.push(e.properties.FIELD_7)
+        // });
+
+        // //then store duplicate neighbourhood names using js filter method (e.g., where neighbourhood appears in both NDVI and LST layers)
+        // const overlapnbrhds = nbrhds.filter((item, index) => index !== nbrhds.indexOf(item));
+        // console.log(overlapnbrhds);
+
+        // //next update add layer to filter for polygons w/ overlapping neighbourhoods
+        // let filter = ['match', ['get', 'FIELD_7'], overlapnbrhds, true, false]
+
+        // map.setFilter('outline', filter)
+
+
 
 /*-----------------------------------------------------------------------------------
 Filter LST to show selected LST ranges from dropdown selection
 -------------------------------------------------------------------------------------*/
 
 let LSTvalueselection;
+
 
 document.getElementById("LSTfieldset").addEventListener('change', (e) => {
     LSTvalueselection = document.getElementById('LSTvalueset').value;
@@ -434,6 +464,7 @@ document.getElementById("LSTfieldset").addEventListener('change', (e) => {
         map.setFilter(
             'LST',
             ['has', 'FIELD_7'] //returns all polygons from layer that have a value in FIELD_7;
+
         );
     } else {
         if (LSTvalueselection == 'LST1') {
@@ -478,15 +509,44 @@ document.getElementById("LSTfieldset").addEventListener('change', (e) => {
                     ['>=', ['get', 'mean_lst_3'], 32.0],
                     ['<', ['get', 'mean_lst_3'], 32.9]])
         };
-    };
 
+        let visiblepolysNDVI = map.queryRenderedFeatures({ layers: ['NDVI'] });
+        let visiblepolysLST = map.queryRenderedFeatures({ layers: ['LST'] });
+
+        let nbrhdsNDVI = []
+        visiblepolysNDVI.forEach(e => {
+            nbrhdsNDVI.push(e.properties.FIELD_7)
+        });
+
+        let nbrhdsLST = []
+        visiblepolysLST.forEach(e => {
+            nbrhdsLST.push(e.properties.FIELD_7)
+        });
+
+        const withoutduplicatesNDVI = nbrhdsNDVI.filter((item, index) => index == nbrhdsNDVI.indexOf(item));
+        console.log(withoutduplicatesNDVI);
+
+        const withoutduplicatesLST = nbrhdsLST.filter((item, index) => index == nbrhdsLST.indexOf(item));
+        console.log(withoutduplicatesLST);
+
+        let filter = withoutduplicatesNDVI.filter(element => withoutduplicatesLST.includes(element));
+        console.log(filter)
+
+        map.setFilter('outline', filter)
+        
+        
+    }
 });
+
+// const overlapping = noduplicatesNDVI.filter((item, index) => index == noduplicatesLST.indexOf(item));
+
+
 //CODE FOR THE OUTLINE TO WORK:
 
 //get values from current layers shown in map and store as object
-// let visiblepolys = map.queryRenderedFeatures(
-//     { layers: ['NDVI', 'LST'] }
-// );
+
+// let visiblepolys = map.queryRenderedFeatures({ layers: ['NDVI,'LST']});
+//     console.log(visiblepolys)
 
 // //check for duplicates in visiblepolys by first getting neighbourhood names
 // let nbrhds = []
@@ -504,7 +564,4 @@ document.getElementById("LSTfieldset").addEventListener('change', (e) => {
 // map.setFilter('outline', filter)
 
 
-//CODE FOR THE OUTLINE attempt #2:
-let selectedNDVI = NDVIvalueselection;
-let selectedLST = LSTvalueselection;
 
