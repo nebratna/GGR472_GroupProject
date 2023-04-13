@@ -59,11 +59,26 @@
     width: 100%;
 }
 
+
 .map-overlay-data {
     position: relative;
     font: 14px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
     background: rgba(255, 255, 255, 0.8);
     width: 285px;
+    top: 0;
+    left: 10px;
+    margin-top: 10px;
+    padding: 10px;
+    overflow: visible;
+    box-shadow: 5px 5px 5px rgba(54, 52, 52, 0.511);
+    border-radius: 10px;
+}
+
+.map-overlay-data2 {
+    position: relative;
+    font: 14px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    background: rgba(255, 255, 255, 0.8);
+    width: 100px;
     top: 0;
     left: 10px;
     margin-top: 10px;
