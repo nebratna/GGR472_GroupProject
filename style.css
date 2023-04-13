@@ -28,6 +28,8 @@
     padding: 10px;
     /*around elements inside of overlay*/
     overflow: visible;
+    box-shadow: 5px 5px 5px rgba(54, 52, 52, 0.511);
+        border-radius: 10px;
 }
 /* .map-overlay-inner {
     position: relative;
@@ -67,6 +69,8 @@
     margin-top: 10px;
     padding: 10px;
     overflow: visible;
+    box-shadow: 5px 5px 5px rgba(54, 52, 52, 0.511);
+    border-radius: 10px;
 }
 
 .legend {
@@ -74,10 +78,10 @@
     display: none;
     /*set to none so that when a checkbox is clicked it's turned on*/
     background-color: #fff;
-    border-radius: 3px;
+    border-radius: 10px;
     bottom: 0;
     margin-bottom: 30px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: 5px 5px 5px rgba(54, 52, 52, 0.511);
     /* hotizontal, vertical, size, color*/
     font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
     padding: 10px;
@@ -106,10 +110,10 @@
     display: none;
     /*set to none so that when a checkbox is clicked it's turned on*/
     background-color: #fff;
-    border-radius: 3px;
+    border-radius: 10px;
     bottom: 0;
     margin-bottom: 30px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: 5px 5px 5px rgba(54, 52, 52, 0.511);
     /* hotizontal, vertical, size, color*/
     font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
     padding: 10px;
