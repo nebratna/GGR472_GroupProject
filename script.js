@@ -409,44 +409,44 @@ document.getElementById("NDVIfieldset").addEventListener('change', (e) => {
 
         const withoutduplicatesNDVI = nbrhdsNDVI.filter((item, index) => index == nbrhdsNDVI.indexOf(item)); //removes dulplicates
         console.log(withoutduplicatesNDVI);
-        
+
         const withoutduplicatesLST = nbrhdsLST.filter((item, index) => index == nbrhdsLST.indexOf(item));
         console.log(withoutduplicatesLST);
-        
+
         let filter = withoutduplicatesNDVI.filter(element => withoutduplicatesLST.includes(element)); // this creates an array with polygon names that should be outlined
         console.log(filter)
-        
+
         map.setFilter('outline', ['==', ['get', 'FIELD_7'], filter]) // this is suppoesed to outline the polygons with names in 'filter'
 
-        
+
 
     }
 });
 
-        //CODE FOR THE OUTLINE TO WORK attempt #1:
+//CODE FOR THE OUTLINE TO WORK attempt #1:
 
-        //get values from current layers shown in map and store as object
-
-
+//get values from current layers shown in map and store as object
 
 
-        // let visiblepolys = map.queryRenderedFeatures({ layers: ['NDVI', 'LST']});
-        // console.log(visiblepolys)
 
-        // //check for duplicates in visiblepolys by first getting neighbourhood names
-        // let nbrhds = []
-        // visiblepolys.forEach(e => {
-        //     nbrhds.push(e.properties.FIELD_7)
-        // });
 
-        // //then store duplicate neighbourhood names using js filter method (e.g., where neighbourhood appears in both NDVI and LST layers)
-        // const overlapnbrhds = nbrhds.filter((item, index) => index !== nbrhds.indexOf(item));
-        // console.log(overlapnbrhds);
+// let visiblepolys = map.queryRenderedFeatures({ layers: ['NDVI', 'LST']});
+// console.log(visiblepolys)
 
-        // //next update add layer to filter for polygons w/ overlapping neighbourhoods
-        // let filter = ['match', ['get', 'FIELD_7'], overlapnbrhds, true, false]
+// //check for duplicates in visiblepolys by first getting neighbourhood names
+// let nbrhds = []
+// visiblepolys.forEach(e => {
+//     nbrhds.push(e.properties.FIELD_7)
+// });
 
-        // map.setFilter('outline', filter)
+// //then store duplicate neighbourhood names using js filter method (e.g., where neighbourhood appears in both NDVI and LST layers)
+// const overlapnbrhds = nbrhds.filter((item, index) => index !== nbrhds.indexOf(item));
+// console.log(overlapnbrhds);
+
+// //next update add layer to filter for polygons w/ overlapping neighbourhoods
+// let filter = ['match', ['get', 'FIELD_7'], overlapnbrhds, true, false]
+
+// map.setFilter('outline', filter)
 
 
 
@@ -533,8 +533,8 @@ document.getElementById("LSTfieldset").addEventListener('change', (e) => {
         console.log(filter)
 
         map.setFilter('outline', filter)
-        
-        
+
+
     }
 });
 
@@ -564,4 +564,91 @@ document.getElementById("LSTfieldset").addEventListener('change', (e) => {
 // map.setFilter('outline', filter)
 
 
+/*----------------------------------------------------------------
+CREATING THE TWO MAPS FOR COMPARISON------------------------------
+-----------------------------------------------------------------*/
 
+// const NDVImap = new mapboxgl.Map({
+//     container: 'before',
+//     style: 'mapbox://styles/nebratna/clf2y6xcs002r01o5kcpwugoc',
+//     center: [-79.408, 43.7056],
+//     zoom: 10,
+// });
+
+// const LSTmap = new mapboxgl.Map({
+//     container: 'after',
+//     style: 'mapbox://styles/nebratna/clf2y6xcs002r01o5kcpwugoc',
+//     center: [-79.408, 43.7056],
+//     zoom: 10,
+// });
+
+// NDVImap.on('load', () => {
+
+//     /*----------------------------
+//     NDVI layer
+//     ------------------------------*/
+
+//     NDVImap.addSource('neighbNDVI', {
+//         type: 'geojson',
+//         data: ndvigeojson
+//     });
+
+//     NDVImap.addLayer({
+//         'id': 'NDVI2',
+//         'type': 'fill',
+//         'source': 'neighbNDVI',
+//         'paint': {
+//             'fill-color': [
+//                 'step', // STEP expression produces stepped results based on value pairs
+//                 ['get', 'mean_ndvi_'], // 
+//                 '#a64dff', // Colour assigned to any values < first step
+//                 0.10, '#eff3ff', // Colours assigned to values >= each step
+//                 0.24, '#bae4b3',
+//                 0.36, '#74c476',
+//                 0.43, '#31a354', //0.43 to 0.48
+//                 0.48, '#006d2c', //0.48 and higher
+
+//             ],
+//             'fill-opacity': 0.5,
+//             'fill-outline-color': 'black'
+//         },
+
+//     });
+
+// });
+
+// LSTmap.on('load', () => {
+//     LSTmap.addSource('neighbLST', {
+//         type: 'geojson',
+//         data: lstgeojson
+//     });
+
+//     LSTmap.addLayer({
+//         'id': 'LST2',
+//         'type': 'fill',
+//         'source': 'neighbLST',
+//         'paint': {
+//             'fill-color': [
+//                 'step', // STEP expression produces stepped results based on value pairs
+//                 ['get', 'mean_lst_3'], // 
+//                 '#a64dff', // Colour assigned to any values < first step
+//                 27.0, '#fee5d9',// Colours assigned to values >= each step
+//                 28.0, '#fcbba1',
+//                 29.0, '#fc9272',
+//                 30.0, '#fb6a4a',
+//                 31.0, '#de2d26', //30.90 and higher
+//                 32.0, '#a50f15',
+//             ],
+//             'fill-opacity': 0.5,
+//             'fill-outline-color': 'black'
+//         },
+
+//     });
+
+//     const container = 'map2';
+//     const comparemap = new mapboxgl.Compare(NDVImap, LSTmap, container, {});
+// });
+
+
+// //Set button and text display variables
+// let btnSlider = document.getElementById("Comparison-btn")

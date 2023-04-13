@@ -27,7 +27,7 @@
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
     <!--round slider-->
-    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <!-- <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script> -->
 
 
 
@@ -279,7 +279,8 @@
                 <fieldset id="NDVIfieldset">
                     <label><br> Select the level of greenness (NDVI)</label>
                     <div>
-                        <select id="NDVIvalueset" class="select" size="5" multiple> <!--multiple option allow to select multiple items at the same time, but it doesn't seem to work with my js code-->
+                        <select id="NDVIvalueset" class="select" size="5" multiple>
+                            <!--multiple option allow to select multiple items at the same time, but it doesn't seem to work with my js code-->
                             <!-- <option value="" disabled selected>Select NDVI</option> -->
                             <option value="All">Show all</option>
                             <option value="neighbourhoods1">Least green: 0.10 - 0.23</option>
@@ -310,11 +311,16 @@
                     </div>
                 </fieldset>
             </form>
-    </div>
+
+            <!--Button to take the user on another page with the slider-->
+            <form>
+                <button type="button" class="btn btn-success"
+                    onclick="window.location.href='slider.html'">Slider</button>
+            </form>
 
 
 
-    <script src="script.js"></script>
+            <script src="script.js"></script>
 
 </body>
 
