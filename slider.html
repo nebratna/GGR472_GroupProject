@@ -34,6 +34,33 @@
 </head>
 
 <body>
+    <!--Bootstrap Navbar-->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand"> Toronto's Greenery and Temperatures </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Use Bootstrap Navbar to link to Learn More and About Us pages; 
+                 Set collapsible button for small screens-->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="use.html">Using this map</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="learn.html">Learn More</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <!-- MAP CONTAINER -->
     <div id='map' class='map'></div>
 
@@ -47,7 +74,7 @@
         <div class='map-overlay-search'>
             <label>Search for location</label>
             <div id="geocoder" class="geocoder"></div>
-            <button type="button" class="btn btn-outline-secondary" id="returnbutton">Return to full extent</button>
+            <!-- <button type="button" class="btn btn-outline-secondary" id="returnbutton">Return to full extent</button> -->
         </div>
 
 
@@ -96,7 +123,8 @@
 
             <!--Button to take the user on another page with the slider-->
             <form>
-                <button type="button" class="btn btn-success" onclick="window.location.href='index.html'">Home</button>
+                <button type="button" class="btn btn-success" onclick="window.location.href='index.html'">Back to main
+                    map</button>
             </form>
 
 

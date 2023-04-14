@@ -65,6 +65,8 @@ map.on('load', () => {
     });
 
     //Add another visualization of the neighbrouhood polygons when the mouse is hovering over it
+    // this code needs some work as the hover gets stuck
+    //
     // map.addLayer({
     //     'id': 'NDVI-hl', //Update id to represent highlighted layer
     //     'type': 'fill',
@@ -143,20 +145,21 @@ map.on('load', () => {
     //     'filter': ['==', ['get', 'mean_ndvi_'], ''] //Set an initial filter to return nothing
     // });
 
-    /*------------------------------------
-    Outline layer 
-    --------------------------------------*/
+    /*---------------------------------------------------------------------------------------
+    Outline layer for the highlights that are activated when LST and NDVI ranges are selected
+    Note: this code does not function properly and needs modification
+    -------------------------------------------------------------------------------------------*/
 
-    map.addLayer({
-        'id': 'outline',
-        'type': 'line',
-        'source': 'neighbNDVI',
-        'paint': {
-            'line-color': 'red',
-        },
-        'filter': ['==', ['get', 'FIELD_7'], ''] //Set an initial filter to return nothing 
+    // map.addLayer({
+    //     'id': 'outline',
+    //     'type': 'line',
+    //     'source': 'neighbNDVI',
+    //     'paint': {
+    //         'line-color': 'red',
+    //     },
+    //     'filter': ['==', ['get', 'FIELD_7'], ''] //Set an initial filter to return nothing 
 
-    });
+    // });
 
     /*-----------------------------------------------------------------
     ADDING MOUSE CLICK EVENT FOR LAYER
@@ -209,7 +212,8 @@ map.on('load', () => {
     });
 
     /*---------------------------------------------------------------------
-    SIMPLE HOVER EVENTs for NDVI and LST //need to fix reset!!!!
+    SIMPLE HOVER EVENTs for NDVI and LST 
+    Note: need to fix it as the hover does not reset
     ----------------------------------------------------------------------*/
     // map.on('mousemove', 'NDVI', (e) => {
     //     if (e.features.length > 0) {
@@ -230,7 +234,8 @@ map.on('load', () => {
     const geocoder = new MapboxGeocoder({
         accessToken: mapboxgl.accessToken,
         mapboxgl: mapboxgl,
-        countries: "ca"
+        countries: "ca",
+        region: "toronto"
     });
 
     //Use geocoder div to position geocoder on page
@@ -393,64 +398,39 @@ document.getElementById("NDVIfieldset").addEventListener('change', (e) => {
                     ['<', ['get', 'mean_ndvi_'], 0.54]])
         };
 
-        let visiblepolysNDVI = map.queryRenderedFeatures({ layers: ['NDVI'] }); // gather all polygons that were generated for NDVI selection
-        let visiblepolysLST = map.queryRenderedFeatures({ layers: ['LST'] }); // gather all polygons that were generated for LST selection
 
-        let nbrhdsNDVI = []  // this will have a list of all neighbrourhoods with selected NDVI, but it has duplicates somehow
-        visiblepolysNDVI.forEach(e => {
-            nbrhdsNDVI.push(e.properties.FIELD_7)
-        });
+        // This code is for Outline to work when the neighbourhoods with the selected NDVI and LST ranges overlap
+        // Note: it needs to be fixed; currently the outline is one step behing what it should be
 
-        let nbrhdsLST = [] // this will have a list of all neighbrourhoods with selected LST, but it has duplicates somehow
-        visiblepolysLST.forEach(e => {
-            nbrhdsLST.push(e.properties.FIELD_7)
-        });
+        // let visiblepolysNDVI = map.queryRenderedFeatures({ layers: ['NDVI'] }); // gather all polygons that were generated for NDVI selection
+        // let visiblepolysLST = map.queryRenderedFeatures({ layers: ['LST'] }); // gather all polygons that were generated for LST selection
 
-        const withoutduplicatesNDVI = nbrhdsNDVI.filter((item, index) => index == nbrhdsNDVI.indexOf(item)); //removes dulplicates
-        console.log(withoutduplicatesNDVI);
+        // let nbrhdsNDVI = []  // this will have a list of all neighbrourhoods with selected NDVI, but it has duplicates somehow
+        // visiblepolysNDVI.forEach(e => {
+        //     nbrhdsNDVI.push(e.properties.FIELD_7)
+        // });
 
-        const withoutduplicatesLST = nbrhdsLST.filter((item, index) => index == nbrhdsLST.indexOf(item));
-        console.log(withoutduplicatesLST);
+        // let nbrhdsLST = [] // this will have a list of all neighbrourhoods with selected LST, but it has duplicates somehow
+        // visiblepolysLST.forEach(e => {
+        //     nbrhdsLST.push(e.properties.FIELD_7)
+        // });
 
-        let valuesNDVI = withoutduplicatesNDVI.filter(element => withoutduplicatesLST.includes(element)); // this creates an array with polygon names that should be outlined
-        console.log(valuesNDVI)
+        // const withoutduplicatesNDVI = nbrhdsNDVI.filter((item, index) => index == nbrhdsNDVI.indexOf(item)); //removes dulplicates
+        // console.log(withoutduplicatesNDVI);
+
+        // const withoutduplicatesLST = nbrhdsLST.filter((item, index) => index == nbrhdsLST.indexOf(item));
+        // console.log(withoutduplicatesLST);
+
+        // let valuesNDVI = withoutduplicatesNDVI.filter(element => withoutduplicatesLST.includes(element)); // this creates an array with polygon names that should be outlined
+        // console.log(valuesNDVI)
         
-        let filter = ['any'].concat(valuesNDVI.map(value => ['==', ['get', FIELD_7], value]));
-        let stringfilter = JSON.stringify(filter) //to convert to string from an array
+        // let filter = ['any'].concat(valuesNDVI.map(value => ['==', ['get', 'FIELD_7'], value]));
+        // // let stringfilter = JSON.stringify(filter) //to convert to string from an array
 
-        map.setFilter('outline', stringfilter) // this is suppoesed to outline the polygons with names in 'filter'
-
-
+        // map.setFilter('outline', filter) // this is suppoesed to outline the polygons with names in 'filter'
 
     }
 });
-
-//CODE FOR THE OUTLINE TO WORK attempt #1:
-
-//get values from current layers shown in map and store as object
-
-
-
-
-// let visiblepolys = map.queryRenderedFeatures({ layers: ['NDVI', 'LST']});
-// console.log(visiblepolys)
-
-// //check for duplicates in visiblepolys by first getting neighbourhood names
-// let nbrhds = []
-// visiblepolys.forEach(e => {
-//     nbrhds.push(e.properties.FIELD_7)
-// });
-
-// //then store duplicate neighbourhood names using js filter method (e.g., where neighbourhood appears in both NDVI and LST layers)
-// const overlapnbrhds = nbrhds.filter((item, index) => index !== nbrhds.indexOf(item));
-// console.log(overlapnbrhds);
-
-// //next update add layer to filter for polygons w/ overlapping neighbourhoods
-// let filter = ['match', ['get', 'FIELD_7'], overlapnbrhds, true, false]
-
-// map.setFilter('outline', filter)
-
-
 
 /*-----------------------------------------------------------------------------------
 Filter LST to show selected LST ranges from dropdown selection
@@ -511,148 +491,37 @@ document.getElementById("LSTfieldset").addEventListener('change', (e) => {
                     ['<', ['get', 'mean_lst_3'], 32.9]])
         };
 
-        let visiblepolysNDVI = map.queryRenderedFeatures({ layers: ['NDVI'] });
-        let visiblepolysLST = map.queryRenderedFeatures({ layers: ['LST'] });
+        // This code is for Outline to work when the neighbourhoods with the selected NDVI and LST ranges overlap
+        // Note: it needs to be fixed; currently the outline is one step behing what it should be
 
-        let nbrhdsNDVI = []
-        visiblepolysNDVI.forEach(e => {
-            nbrhdsNDVI.push(e.properties.FIELD_7)
-        });
+        // let visiblepolysNDVI = map.queryRenderedFeatures({ layers: ['NDVI'] });
+        // let visiblepolysLST = map.queryRenderedFeatures({ layers: ['LST'] });
 
-        let nbrhdsLST = []
-        visiblepolysLST.forEach(e => {
-            nbrhdsLST.push(e.properties.FIELD_7)
-        });
+        // let nbrhdsNDVI = []
+        // visiblepolysNDVI.forEach(e => {
+        //     nbrhdsNDVI.push(e.properties.FIELD_7)
+        // });
 
-        const withoutduplicatesNDVI = nbrhdsNDVI.filter((item, index) => index == nbrhdsNDVI.indexOf(item));
-        console.log(withoutduplicatesNDVI);
+        // let nbrhdsLST = []
+        // visiblepolysLST.forEach(e => {
+        //     nbrhdsLST.push(e.properties.FIELD_7)
+        // });
 
-        const withoutduplicatesLST = nbrhdsLST.filter((item, index) => index == nbrhdsLST.indexOf(item));
-        console.log(withoutduplicatesLST);
+        // const withoutduplicatesNDVI = nbrhdsNDVI.filter((item, index) => index == nbrhdsNDVI.indexOf(item));
+        // console.log(withoutduplicatesNDVI);
 
-        let valuesLST = withoutduplicatesNDVI.filter(element => withoutduplicatesLST.includes(element));
-        console.log(valuesLST)
+        // const withoutduplicatesLST = nbrhdsLST.filter((item, index) => index == nbrhdsLST.indexOf(item));
+        // console.log(withoutduplicatesLST);
 
-        let filter = ['any'].concat(valuesLST.map(value => ['==', ['get', FIELD_7], value]));
-        let stringfilter = JSON.stringify(filter) //to convert to string from an array
+        // let valuesLST = withoutduplicatesNDVI.filter(element => withoutduplicatesLST.includes(element));
+        // console.log(valuesLST)
 
-        map.setFilter('outline', stringfilter) // this is suppoesed to outline the polygons with names in 'filter'
+        // let filter = ['any'].concat(valuesLST.map(value => ['==', ['get', 'FIELD_7'], value]));
+        // // let stringfilter = JSON.stringify(filter) //to convert to string from an array
+
+        // map.setFilter('outline', filter) // this is suppoesed to outline the polygons with names in 'filter'
 
 
     }
 });
 
-// const overlapping = noduplicatesNDVI.filter((item, index) => index == noduplicatesLST.indexOf(item));
-
-
-//CODE FOR THE OUTLINE TO WORK:
-
-//get values from current layers shown in map and store as object
-
-// let visiblepolys = map.queryRenderedFeatures({ layers: ['NDVI,'LST']});
-//     console.log(visiblepolys)
-
-// //check for duplicates in visiblepolys by first getting neighbourhood names
-// let nbrhds = []
-// visiblepolys.forEach(e => {
-//     nbrhds.push(e.properties.FIELD_7)
-// });
-
-// //then store duplicate neighbourhood names using js filter method (e.g., where neighbourhood appears in both NDVI and LST layers)
-// const overlapnbrhds = nbrhds.filter((item, index) => index !== nbrhds.indexOf(item));
-// console.log(overlapnbrhds);
-
-// //next update add layer to filter for polygons w/ overlapping neighbourhoods
-// let filter = ['match', ['get', 'FIELD_7'], overlapnbrhds, true, false]
-// console.log(filter)
-// map.setFilter('outline', filter)
-
-
-/*----------------------------------------------------------------
-CREATING THE TWO MAPS FOR COMPARISON------------------------------
------------------------------------------------------------------*/
-
-// const NDVImap = new mapboxgl.Map({
-//     container: 'before',
-//     style: 'mapbox://styles/nebratna/clf2y6xcs002r01o5kcpwugoc',
-//     center: [-79.408, 43.7056],
-//     zoom: 10,
-// });
-
-// const LSTmap = new mapboxgl.Map({
-//     container: 'after',
-//     style: 'mapbox://styles/nebratna/clf2y6xcs002r01o5kcpwugoc',
-//     center: [-79.408, 43.7056],
-//     zoom: 10,
-// });
-
-// NDVImap.on('load', () => {
-
-//     /*----------------------------
-//     NDVI layer
-//     ------------------------------*/
-
-//     NDVImap.addSource('neighbNDVI', {
-//         type: 'geojson',
-//         data: ndvigeojson
-//     });
-
-//     NDVImap.addLayer({
-//         'id': 'NDVI2',
-//         'type': 'fill',
-//         'source': 'neighbNDVI',
-//         'paint': {
-//             'fill-color': [
-//                 'step', // STEP expression produces stepped results based on value pairs
-//                 ['get', 'mean_ndvi_'], // 
-//                 '#a64dff', // Colour assigned to any values < first step
-//                 0.10, '#eff3ff', // Colours assigned to values >= each step
-//                 0.24, '#bae4b3',
-//                 0.36, '#74c476',
-//                 0.43, '#31a354', //0.43 to 0.48
-//                 0.48, '#006d2c', //0.48 and higher
-
-//             ],
-//             'fill-opacity': 0.5,
-//             'fill-outline-color': 'black'
-//         },
-
-//     });
-
-// });
-
-// LSTmap.on('load', () => {
-//     LSTmap.addSource('neighbLST', {
-//         type: 'geojson',
-//         data: lstgeojson
-//     });
-
-//     LSTmap.addLayer({
-//         'id': 'LST2',
-//         'type': 'fill',
-//         'source': 'neighbLST',
-//         'paint': {
-//             'fill-color': [
-//                 'step', // STEP expression produces stepped results based on value pairs
-//                 ['get', 'mean_lst_3'], // 
-//                 '#a64dff', // Colour assigned to any values < first step
-//                 27.0, '#fee5d9',// Colours assigned to values >= each step
-//                 28.0, '#fcbba1',
-//                 29.0, '#fc9272',
-//                 30.0, '#fb6a4a',
-//                 31.0, '#de2d26', //30.90 and higher
-//                 32.0, '#a50f15',
-//             ],
-//             'fill-opacity': 0.5,
-//             'fill-outline-color': 'black'
-//         },
-
-//     });
-
-//     const container = 'map2';
-//     const comparemap = new mapboxgl.Compare(NDVImap, LSTmap, container, {});
-// });
-
-
-// //Set button and text display variables
-// let btnSlider = document.getElementById("Comparison-btn")

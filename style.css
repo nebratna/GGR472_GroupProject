@@ -7,14 +7,14 @@
     width: 100%;
 }
 
-.map2 {
+/* .map2 {
     position: absolute;
     top: 11%;
     left: 0;
     right: 0;
     bottom: 0;
     width: 100%;
-}
+} */
 
 .subheading {
     font-size: 30px;
@@ -51,7 +51,7 @@
 
 .geocoder {
     position: relative;
-    margin: 10px 0 10px;
+        margin: 10px 0 10px;
 }
 
 #returnbutton {
