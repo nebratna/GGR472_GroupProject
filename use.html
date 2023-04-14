@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Using The Map</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+
+<body>
+    <!--Set Nabvar to navigate back to home page-->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html"> Toronto's Greenery and Temperatures </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Using this map</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="learn.html">Learn More</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <p class="subheading">Key Terms:</p>
+    <!-- Tiles -->
+    <div class="container mx-auto mt-4">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card" style="width: 20rem;">
+                    <img src="https://gisgeography.com/wp-content/uploads/2017/08/ndvi-united-states-1.png"
+                        class="card-img-top" alt="NDVI map of the United States">
+                    <div class="card-body">
+                        <h5 class="card-title">What is NDVI?</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">And how does it measure greenness?</h6>
+                        <p class="card-text">Normalized Difference Vegetation Index (NDVI) is an incredible metric to
+                            measure how green an area is using satellite imagery.</p>
+                        <a href="https://gisgeography.com/ndvi-normalized-difference-vegetation-index/" target="_blank"
+                            class="btn mr-2"><i class="fas fa-link"></i> Learn More</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card" style="width: 20rem;">
+                    <img src="https://eoimages.gsfc.nasa.gov/images/globalmaps/data/MOD_LSTD_M/MOD_LSTD_M_2000-02.JPEG"
+                        class="card-img-top" alt="LST map of the World">
+                    <div class="card-body">
+                        <h5 class="card-title">What is LST?</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">And why does it matter?</h6>
+                        <p class="card-text"> Land Surface Temperature (LST) is a way of measuring how warm an area
+                            gets, also using satellite imagery.</p>
+                        <a href="https://earthobservatory.nasa.gov/global-maps/MOD_LSTD_M#:~:text=Land%20surface%20temperature%20is%20how,the%20atmosphere%20to%20the%20ground."
+                            target="_blank" class="btn mr-2"><i class="fas fa-link"></i> Learn More</a>
+                    </div>
+                </div>
+            </div>
+
+            <p class="subheading1">Using the map:</p>
+            <div class="card" style="width: 75rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Explore NDVI and LST in Toronto's Neighbourhoods </h5>
+                    <h6 class="card-subtitle mb-2 text-muted"> </h6>
+                    <p class="card-text"> Use the toggles and checkboxes on the panel on the left in the main map to see
+                        how NDVI and LST values vary for Toronto's neighbourhoods, and to see which neighbourhoods fall
+                        into specific ranges. You can choose to turn legends ON and OFF. If there is an overlap between
+                        the red (LST) and green (NDVI) layers, the resulting neighbourhoods are varying shades of orange
+                        and brown.
+                        You can also click on each neighbourhood to see its name and the corresponding LST and NDVI
+                        values (if you have both layers turned on, the popup boxes will appear as two separate boxes,
+                        one directly underneath the other. Close the first popup to see the second popup under it.)
+                        <br>
+                        The "compare with slider" button allows you to compare the NDVI and LST maps with a quick swipe.
+                        You can return to the main map to find the exact values for both parameters.
+                    </p>
+                </div>
+            </div>
+
+
+</body>

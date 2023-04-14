@@ -347,7 +347,6 @@ Filter neighbourhoods to show selected NDVI ranges from dropdown selection
 
 let NDVIvalueselection;
 
-
 document.getElementById("NDVIfieldset").addEventListener('change', (e) => {
     NDVIvalueselection = document.getElementById('NDVIvalueset').value;
 
@@ -413,10 +412,13 @@ document.getElementById("NDVIfieldset").addEventListener('change', (e) => {
         const withoutduplicatesLST = nbrhdsLST.filter((item, index) => index == nbrhdsLST.indexOf(item));
         console.log(withoutduplicatesLST);
 
-        let filter = withoutduplicatesNDVI.filter(element => withoutduplicatesLST.includes(element)); // this creates an array with polygon names that should be outlined
-        console.log(filter)
+        let valuesNDVI = withoutduplicatesNDVI.filter(element => withoutduplicatesLST.includes(element)); // this creates an array with polygon names that should be outlined
+        console.log(valuesNDVI)
+        
+        let filter = ['any'].concat(valuesNDVI.map(value => ['==', ['get', FIELD_7], value]));
+        let stringfilter = JSON.stringify(filter) //to convert to string from an array
 
-        map.setFilter('outline', ['==', ['get', 'FIELD_7'], filter]) // this is suppoesed to outline the polygons with names in 'filter'
+        map.setFilter('outline', stringfilter) // this is suppoesed to outline the polygons with names in 'filter'
 
 
 
@@ -455,7 +457,6 @@ Filter LST to show selected LST ranges from dropdown selection
 -------------------------------------------------------------------------------------*/
 
 let LSTvalueselection;
-
 
 document.getElementById("LSTfieldset").addEventListener('change', (e) => {
     LSTvalueselection = document.getElementById('LSTvalueset').value;
@@ -529,10 +530,13 @@ document.getElementById("LSTfieldset").addEventListener('change', (e) => {
         const withoutduplicatesLST = nbrhdsLST.filter((item, index) => index == nbrhdsLST.indexOf(item));
         console.log(withoutduplicatesLST);
 
-        let filter = withoutduplicatesNDVI.filter(element => withoutduplicatesLST.includes(element));
-        console.log(filter)
+        let valuesLST = withoutduplicatesNDVI.filter(element => withoutduplicatesLST.includes(element));
+        console.log(valuesLST)
 
-        map.setFilter('outline', filter)
+        let filter = ['any'].concat(valuesLST.map(value => ['==', ['get', FIELD_7], value]));
+        let stringfilter = JSON.stringify(filter) //to convert to string from an array
+
+        map.setFilter('outline', stringfilter) // this is suppoesed to outline the polygons with names in 'filter'
 
 
     }

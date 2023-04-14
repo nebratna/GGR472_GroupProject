@@ -1,6 +1,6 @@
 .map {
     position: absolute;
-    top: 9%;
+    top: 11%;
     left: 0;
     right: 0;
     bottom: 0;
@@ -9,21 +9,38 @@
 
 .map2 {
     position: absolute;
-    top: 0;
+    top: 11%;
     left: 0;
     right: 0;
     bottom: 0;
     width: 100%;
 }
 
+.subheading {
+    font-size: 30px;
+    font: 'Calibri';
+    -webkit-text-fill-color: #d1f6fb;
+    font-weight: bold;
+    position: relative;
+    margin: 20px 10px 10px 110px;
+}
+
+.subheading1 {
+    font-size: 30px;
+    font: 'Calibri';
+    -webkit-text-fill-color: #d1f6fb;
+    font-weight: bold;
+    position: relative;
+    margin: 0px 0 20px 1px;
+}
 
 .map-overlay-search {
     position: relative;
-    font: 14px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-    background: rgba(255, 255, 255, 0.8);
+    font: 16px/20px 'Calibri';
+    background: rgba(177, 226, 227, 0.7);
     top: 0;
     left: 0;
-    width: 260px;
+    width: 285px;
     margin: 10px 0 0 10px;
     padding: 10px;
     /*around elements inside of overlay*/
@@ -46,8 +63,8 @@
 
 .map-overlay-data {
     position: relative;
-    font: 14px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-    background: rgba(255, 255, 255, 0.8);
+    font: 16px/20px 'Calibri';
+    background: rgba(177, 227, 178, 0.7);
     width: 285px;
     top: 0;
     left: 10px;
@@ -60,9 +77,9 @@
 
 .map-overlay-data2 {
     position: relative;
-    font: 14px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-    background: rgba(255, 255, 255, 0.8);
-    width: 100px;
+    font: 16px/20px 'Calibri';
+    background: rgba(177, 227, 178, 0.7);
+    width: 285px;
     top: 0;
     left: 10px;
     margin-top: 10px;
@@ -82,7 +99,7 @@
     margin-bottom: 30px;
     box-shadow: 5px 5px 5px rgba(54, 52, 52, 0.511);
     /* hotizontal, vertical, size, color*/
-    font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font: 16px/20px 'Calibri';
     padding: 10px;
     right: 10px;
     z-index: 1;
@@ -114,7 +131,7 @@
     margin-bottom: 30px;
     box-shadow: 5px 5px 5px rgba(54, 52, 52, 0.511);
     /* hotizontal, vertical, size, color*/
-    font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font: 16px/20px 'Calibri';
     padding: 10px;
     right: 120px;
     z-index: 1;
@@ -140,6 +157,7 @@
 .navbar {
     overflow: hidden;
     background-color: #c9f2f6;
+    font: 20px/40px 'Calibri';
 }
 
 /* Navbar links */
@@ -169,19 +187,15 @@ body {
     margin-bottom: 2rem;
 }
 
-.btn {
-    background: var(--gradient) !important;
-    -webkit-background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
-    border-image-source: var(--gradient) !important;
-    text-decoration: none;
-}
-
-.btn:hover,
+.btn,
 .btn:focus {
     background: var(--gradient) !important;
     -webkit-background-clip: none !important;
     -webkit-text-fill-color: #fff !important;
-    box-shadow: #0b6365 1px 0 10px;
     text-decoration: none;
+
+}
+
+.btn:hover {
+    box-shadow: #0b6365 1px 0 10px;
 }

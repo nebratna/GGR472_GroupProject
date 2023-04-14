@@ -41,6 +41,9 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
+                        <a class="nav-link" href="use.html">Using this map</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="learn.html">Learn More</a>
                     </li>
                     <li class="nav-item">
@@ -95,7 +98,7 @@
         <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="NDVIcheck" checked>
             <label class="form-check-label" for="flexCheckDefault">
-                NDVI
+                NDVI (measure of greenness)
             </label>
         </div>
 
@@ -109,7 +112,7 @@
         <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="LSTcheck" checked>
             <label class="form-check-label" for="flexCheckDefault">
-                LST
+                LST (land surface temperature)
             </label>
         </div>
 
@@ -119,6 +122,13 @@
                 LST Legend
             </label>
         </div>
+
+        <!--Button to take the user on another page with the slider-->
+
+        <form>
+            <button type="button" class="btn btn-success" onclick="window.location.href='slider.html'">Compare with
+                Slider</button>
+        </form>
 
         <!--filter/find a neighbourhood-->
         <form>
@@ -327,16 +337,6 @@
                     </div>
                 </fieldset>
             </form>
-
-            <!--Button to take the user on another page with the slider-->
-            <p>
-                <!-- this paragraph creates space between Select LST and Slider button-->
-            </p>
-            <form>
-                <button type="button" class="btn btn-success"
-                    onclick="window.location.href='slider.html'">Slider</button>
-            </form>
-
 
 
             <script src="script.js"></script>
