@@ -1,6 +1,6 @@
 .map {
     position: absolute;
-    top: 0;
+    top: 9%;
     left: 0;
     right: 0;
     bottom: 0;
@@ -29,25 +29,9 @@
     /*around elements inside of overlay*/
     overflow: visible;
     box-shadow: 5px 5px 5px rgba(54, 52, 52, 0.511);
-        border-radius: 10px;
-}
-/* .map-overlay-inner {
-    position: relative;
-    background-color: #fff;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-    border-radius: 3px;
-    padding: 10px;
-    margin-bottom: 10px;
+    border-radius: 10px;
 }
 
-.map-overlay input {
-    background-color: transparent;
-    display: inline-block;
-    width: 100%;
-    position: relative;
-    margin: 0;
-    cursor: ew-resize;
-} */
 .geocoder {
     position: relative;
     margin: 10px 0 10px;
@@ -152,3 +136,52 @@
     /*position of square*/
 }
 
+/* Navbar container */
+.navbar {
+    overflow: hidden;
+    background-color: #c9f2f6;
+}
+
+/* Navbar links */
+.navbar a:hover,
+.dropdown:hover .dropbtn {
+    background: var(--gradient) !important;
+    -webkit-background-clip: none !important;
+    -webkit-text-fill-color: #fff !important;
+    /* border: 5px solid #fff !important;  */
+    box-shadow: #0b6365 1px 0 10px;
+    text-decoration: none;
+}
+
+/* Tiles on Learn More tab and buttons */
+:root {
+    --gradient: linear-gradient(to left top, #1ec283 10%, #210551 90%) !important;
+}
+
+body {
+    background: #065044 !important;
+}
+
+.card {
+    background: #ffffff;
+    border: 1px solid #0ec0cd;
+    color: rgba(19, 95, 71, 0.8);
+    margin-bottom: 2rem;
+}
+
+.btn {
+    background: var(--gradient) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    border-image-source: var(--gradient) !important;
+    text-decoration: none;
+}
+
+.btn:hover,
+.btn:focus {
+    background: var(--gradient) !important;
+    -webkit-background-clip: none !important;
+    -webkit-text-fill-color: #fff !important;
+    box-shadow: #0b6365 1px 0 10px;
+    text-decoration: none;
+}
